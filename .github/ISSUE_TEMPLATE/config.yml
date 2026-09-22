@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/heysidhant/querydock/tree/main/docs
+    about: Configuration, MCP setup and the security model.

@@ -1,0 +1,41 @@
+name: Bug report
+description: Something in QueryDock doesn't work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open a Laravel project with a MySQL .env
+        2. Click Connect
+        3. ...
+  - type: dropdown
+    id: database
+    attributes:
+      label: Database
+      multiple: true
+      options: [SQLite, PostgreSQL, MySQL, MariaDB, SQL Server, Other]
+  - type: dropdown
+    id: editor
+    attributes:
+      label: Editor
+      options: [VS Code, Cursor, Windsurf, VSCodium, Other]
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "QueryDock 0.1.1, VS Code 1.104, macOS 15"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Output panel → "QueryDock". Remove any hostnames or credentials first.
+      render: text
