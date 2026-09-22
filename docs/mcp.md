@@ -12,25 +12,42 @@ The MCP server runs as a background service inside the VS Code Extension Host:
 
 ## Configuring AI Assistants
 
-### Claude Desktop / Cursor Configuration
+The easiest way is the **plug icon** in the QueryDock dashboard header → **Copy MCP configuration**, which copies a ready-made snippet for your client.
 
-Add QueryDock to your `claude_desktop_config.json` or Cursor MCP settings:
+QueryDock installs a small stdio MCP server at `~/.querydock/mcp-server.js` and refreshes it whenever the extension starts, so the path in your client's config never changes between QueryDock versions. The server forwards requests to the QueryDock extension running for your project; keep the project open in your editor.
+
+### Claude Code
+
+```bash
+claude mcp add --transport stdio querydock node ~/.querydock/mcp-server.js
+```
+
+### Cursor, VS Code, Windsurf, Claude Desktop
+
+Add this to `.cursor/mcp.json`, `.mcp.json`, Windsurf's `mcp_config.json` or `claude_desktop_config.json`. JSON configs don't expand `~`, so use your full home path (on Windows, `C:\\Users\\<you>\\.querydock\\mcp-server.js`):
 
 ```json
 {
   "mcpServers": {
     "querydock": {
       "command": "node",
-      "args": [
-        "-e",
-        "fetch('http://127.0.0.1:42100/v1/tools').then(r => r.json()).then(console.log)"
-      ]
+      "args": ["/Users/<you>/.querydock/mcp-server.js"]
     }
   }
 }
 ```
 
-Or connect directly via HTTP SSE / POST to `http://127.0.0.1:<PORT>/tools`.
+The server finds your project from the directory the client starts it in. To point it at a specific project, add `"--project", "/path/to/project"` to `args` or set `QUERYDOCK_PROJECT`.
+
+### HTTP
+
+Clients that support Streamable HTTP can connect directly while the editor is open:
+
+```json
+{ "mcpServers": { "querydock": { "type": "http", "url": "http://127.0.0.1:42100/mcp" } } }
+```
+
+The port starts at `42100`; if it is taken, QueryDock uses the next free port. The dashboard shows the one in use.
 
 ## Exposed Tools
 
