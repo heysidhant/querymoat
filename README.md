@@ -19,6 +19,9 @@ This repository is QueryMoat's public home for **bug reports, feature requests a
 - 🛡️ **Safe MCP server for AI agents.** Claude Code, Cursor, Windsurf and Copilot can read your schema and data through a local MCP server that is read-only by default and never writes to production.
 - ⚡ **Zero config.** Finds databases in `.env`, `docker-compose.yml`, Laravel, Rails, Django, Supabase and Prisma projects.
 - 🗂️ **Database client in your editor.** Browse, edit and export data, run SQL with `EXPLAIN` and history, and inspect schemas, keys and indexes.
+- ✋ **Write approval (Pro).** Agents propose changes; you review the affected rows and approve them in the editor.
+- 🙈 **Personal data stays out of prompts (Pro).** Emails, phone numbers, card numbers and secrets are masked before an agent sees them; hide any table or column with your own rules (free).
+- 🔐 **SSH tunnels and cloud sign-in (Pro).** Reach databases behind a bastion host; sign in with AWS RDS IAM or Azure Entra ID.
 - 🏠 **100% local.** No cloud proxy and no telemetry.
 
 Supports **SQLite, PostgreSQL, MySQL, MariaDB and Microsoft SQL Server**.
