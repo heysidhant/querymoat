@@ -1,6 +1,6 @@
-# QueryDock MCP Server Guide
+# QueryMoat MCP Server Guide
 
-QueryDock provides an integrated **Model Context Protocol (MCP)** server so AI coding assistants (such as Claude Desktop, Cursor, Antigravity, or custom agents) can inspect and query your project databases safely without leaving your development environment.
+QueryMoat provides an integrated **Model Context Protocol (MCP)** server so AI coding assistants (such as Claude Desktop, Cursor, Antigravity, or custom agents) can inspect and query your project databases safely without leaving your development environment.
 
 ## Architecture
 
@@ -12,42 +12,42 @@ The MCP server runs as a background service inside the VS Code Extension Host:
 
 ## Configuring AI Assistants
 
-The easiest way is the **plug icon** in the QueryDock dashboard header → **Copy MCP configuration**, which copies a ready-made snippet for your client.
+The easiest way is the **plug icon** in the QueryMoat dashboard header → **Copy MCP configuration**, which copies a ready-made snippet for your client.
 
-QueryDock installs a small stdio MCP server at `~/.querydock/mcp-server.js` and refreshes it whenever the extension starts, so the path in your client's config never changes between QueryDock versions. The server forwards requests to the QueryDock extension running for your project; keep the project open in your editor.
+QueryMoat installs a small stdio MCP server at `~/.querymoat/mcp-server.js` and refreshes it whenever the extension starts, so the path in your client's config never changes between QueryMoat versions. The server forwards requests to the QueryMoat extension running for your project; keep the project open in your editor.
 
 ### Claude Code
 
 ```bash
-claude mcp add --transport stdio querydock node ~/.querydock/mcp-server.js
+claude mcp add --transport stdio querymoat node ~/.querymoat/mcp-server.js
 ```
 
 ### Cursor, VS Code, Windsurf, Claude Desktop
 
-Add this to `.cursor/mcp.json`, `.mcp.json`, Windsurf's `mcp_config.json` or `claude_desktop_config.json`. JSON configs don't expand `~`, so use your full home path (on Windows, `C:\\Users\\<you>\\.querydock\\mcp-server.js`):
+Add this to `.cursor/mcp.json`, `.mcp.json`, Windsurf's `mcp_config.json` or `claude_desktop_config.json`. JSON configs don't expand `~`, so use your full home path (on Windows, `C:\\Users\\<you>\\.querymoat\\mcp-server.js`):
 
 ```json
 {
   "mcpServers": {
-    "querydock": {
+    "querymoat": {
       "command": "node",
-      "args": ["/Users/<you>/.querydock/mcp-server.js"]
+      "args": ["/Users/<you>/.querymoat/mcp-server.js"]
     }
   }
 }
 ```
 
-The server finds your project from the directory the client starts it in. To point it at a specific project, add `"--project", "/path/to/project"` to `args` or set `QUERYDOCK_PROJECT`.
+The server finds your project from the directory the client starts it in. To point it at a specific project, add `"--project", "/path/to/project"` to `args` or set `QUERYMOAT_PROJECT`.
 
 ### HTTP
 
 Clients that support Streamable HTTP can connect directly while the editor is open:
 
 ```json
-{ "mcpServers": { "querydock": { "type": "http", "url": "http://127.0.0.1:42100/mcp" } } }
+{ "mcpServers": { "querymoat": { "type": "http", "url": "http://127.0.0.1:42100/mcp" } } }
 ```
 
-The port starts at `42100`; if it is taken, QueryDock uses the next free port. The dashboard shows the one in use.
+The port starts at `42100`; if it is taken, QueryMoat uses the next free port. The dashboard shows the one in use.
 
 ## Exposed Tools
 
@@ -114,4 +114,4 @@ Response shape:
 - `sandboxed` is `true` when the statement ran inside a rolled-back sandbox transaction.
 - The submitted SQL is not echoed back.
 
-> **Security Note**: When `querydock.mcp.readOnly` is enabled (default), only `SELECT`/`WITH`/`EXPLAIN`/`SHOW`/`PRAGMA`/`DESCRIBE` statements run. Keywords inside string literals and comments do not trigger the guard; `SELECT ... INTO` and writes hidden after a read do. `EXEC`/`CALL` are rejected unless the target connection sets `"execPolicy": "sandbox"` in `.querydockrc` (optionally narrowed by `execAllowlist`), in which case the call runs inside a transaction that is always rolled back. Dynamic SQL (`EXEC (...)`, `sp_executesql`, `xp_*`) is never sandboxed. The rejection message names the reason (`contains DELETE`, `execPolicy is 'deny'`, allowlist miss).
+> **Security Note**: When `querymoat.mcp.readOnly` is enabled (default), only `SELECT`/`WITH`/`EXPLAIN`/`SHOW`/`PRAGMA`/`DESCRIBE` statements run. Keywords inside string literals and comments do not trigger the guard; `SELECT ... INTO` and writes hidden after a read do. `EXEC`/`CALL` are rejected unless the target connection sets `"execPolicy": "sandbox"` in `.querymoatrc` (optionally narrowed by `execAllowlist`), in which case the call runs inside a transaction that is always rolled back. Dynamic SQL (`EXEC (...)`, `sp_executesql`, `xp_*`) is never sandboxed. The rejection message names the reason (`contains DELETE`, `execPolicy is 'deny'`, allowlist miss).

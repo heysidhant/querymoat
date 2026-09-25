@@ -1,12 +1,12 @@
-QueryDock End User License Agreement
+QueryMoat End User License Agreement
 
 Copyright (c) 2026 Sidhant Sinha. All rights reserved.
 
-This agreement is between you and Sidhant Sinha ("the Licensor") and covers the QueryDock
+This agreement is between you and Sidhant Sinha ("the Licensor") and covers the QueryMoat
 extension for Visual Studio Code and compatible editors, including its code, assets and
 documentation (the "Software"). By installing or using the Software you agree to these terms.
 
-The querydock-check command-line tool, as published from the cli/ directory and to npm, is not
+The querymoat-check command-line tool, as published from the cli/ directory and to npm, is not
 part of the Software: it is licensed under the MIT License. See cli/LICENSE.
 
 1. License grant
@@ -35,7 +35,7 @@ part of the Software: it is licensed under the MIT License. See cli/LICENSE.
 
 5. Ownership
    The Software is licensed, not sold. The Licensor retains all rights, title and interest in the
-   Software, including the QueryDock name and logo.
+   Software, including the QueryMoat name and logo.
 
 6. Your data
    The Software runs locally. It does not send your database contents, credentials or queries to
@@ -60,4 +60,4 @@ part of the Software: it is licensed under the MIT License. See cli/LICENSE.
    The Licensor may update this agreement for future versions of the Software. The version
    shipped with a release applies to that release.
 
-Contact: https://github.com/heysidhant/querydock/issues
+Contact: https://github.com/heysidhant/querymoat/issues

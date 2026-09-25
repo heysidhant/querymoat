@@ -1,10 +1,10 @@
-# QueryDock Configuration Reference
+# QueryMoat Configuration Reference
 
-This guide covers all options for configuring QueryDock via `.querydockrc` and VS Code user/workspace settings.
+This guide covers all options for configuring QueryMoat via `.querymoatrc` and VS Code user/workspace settings.
 
-## Project Configuration: `.querydockrc`
+## Project Configuration: `.querymoatrc`
 
-Place `.querydockrc` (or `.querydockrc.json`) in your repository root. This file can be shared with your team.
+Place `.querymoatrc` (or `.querymoatrc.json`) in your repository root. This file can be shared with your team.
 
 ### Schema Example
 ```json
@@ -68,28 +68,28 @@ Place `.querydockrc` (or `.querydockrc.json`) in your repository root. This file
 
 ---
 
-## VS Code Settings (`querydock.*`)
+## VS Code Settings (`querymoat.*`)
 
 Configure these in VS Code Settings (`Cmd+,` / `Ctrl+,`):
 
-- **`querydock.debug`** (`boolean`, default: `false`)  
-  Enables verbose logging in the QueryDock output channel.
+- **`querymoat.debug`** (`boolean`, default: `false`)  
+  Enables verbose logging in the QueryMoat output channel.
 
-- **`querydock.defaultPageSize`** (`enum: [25, 50, 100, 250, 500]`, default: `100`)  
+- **`querymoat.defaultPageSize`** (`enum: [25, 50, 100, 250, 500]`, default: `100`)  
   Default number of rows retrieved per page in the Data Grid.
 
-- **`querydock.enableAutoDiscovery`** (`boolean`, default: `true`)  
+- **`querymoat.enableAutoDiscovery`** (`boolean`, default: `true`)  
   Automatically scans workspace for `.env`, `docker-compose.yml`, and framework database configurations.
 
-- **`querydock.enableCodeLens`** (`boolean`, default: `true`)  
-  Displays "QueryDock: Open Table" CodeLens above recognized model classes and SQL statements.
+- **`querymoat.enableCodeLens`** (`boolean`, default: `true`)  
+  Displays "QueryMoat: Open Table" CodeLens above recognized model classes and SQL statements.
 
-- **`querydock.enableMcp`** (`boolean`, default: `true`)  
+- **`querymoat.enableMcp`** (`boolean`, default: `true`)  
   Starts the local Model Context Protocol server.
 
-- **`querydock.mcp.readOnly`** (`boolean`, default: `true`)  
+- **`querymoat.mcp.readOnly`** (`boolean`, default: `true`)  
   Restricts MCP SQL queries to read-only statements (`SELECT`, `EXPLAIN`, `WITH`, `SHOW`, `PRAGMA`, `DESCRIBE`). Procedure calls additionally require the connection's `execPolicy: "sandbox"`.  
-  Only **user** settings can turn this off; workspace settings (`.vscode/settings.json`) can set it to `true` to keep a project read-only, but a `false` there is ignored. After you set it to `false`, QueryDock asks you to confirm in a dialog before agents can write, so an agent that edits settings files cannot grant itself write access. Setting it back to `true` revokes the confirmation.
+  Only **user** settings can turn this off; workspace settings (`.vscode/settings.json`) can set it to `true` to keep a project read-only, but a `false` there is ignored. After you set it to `false`, QueryMoat asks you to confirm in a dialog before agents can write, so an agent that edits settings files cannot grant itself write access. Setting it back to `true` revokes the confirmation.
 
-- **`querydock.readOnlyEnvironments`** (`string[]`, default: `["production", "prod", "live"]`)  
+- **`querymoat.readOnlyEnvironments`** (`string[]`, default: `["production", "prod", "live"]`)  
   Environment tags that automatically enforce read-only locking on connections. A connection is also locked when its name, database or username contains one of these tags as a whole word, and whenever it points at a non-local host (see [Security](security.md#4-environment-safety--read-only-protection)). Tags from user and workspace settings are added together and the defaults always apply: settings can add protected tags, never remove one.

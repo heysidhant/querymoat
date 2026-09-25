@@ -1,6 +1,6 @@
 # Supported Databases & Dialects
 
-QueryDock implements a unified driver abstraction layer (`DatabaseDriver`) that provides a uniform developer experience across diverse database management systems.
+QueryMoat implements a unified driver abstraction layer (`DatabaseDriver`) that provides a uniform developer experience across diverse database management systems.
 
 ## 1. SQLite
 
@@ -45,7 +45,7 @@ QueryDock implements a unified driver abstraction layer (`DatabaseDriver`) that 
   - Multi-schema support (`dbo`, user-defined schemas) via `INFORMATION_SCHEMA`.
   - Primary keys, foreign key relations, and indexes via `sys.indexes` and `INFORMATION_SCHEMA`.
   - Paginated queries using T-SQL `OFFSET ... ROWS FETCH NEXT ... ROWS ONLY`.
-  - Configured via `.querydockrc` (no third-party config files are read).
+  - Configured via `.querymoatrc` (no third-party config files are read).
   - Multiple result sets per batch/procedure, `BIGINT` returned as numbers when safe.
   - Sandboxed `EXEC` on read-only connections (`execPolicy: "sandbox"`, always rolled back).
 
