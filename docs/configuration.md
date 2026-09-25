@@ -88,7 +88,8 @@ Configure these in VS Code Settings (`Cmd+,` / `Ctrl+,`):
   Starts the local Model Context Protocol server.
 
 - **`querydock.mcp.readOnly`** (`boolean`, default: `true`)  
-  Restricts MCP SQL queries to read-only statements (`SELECT`, `EXPLAIN`, `WITH`, `SHOW`, `PRAGMA`, `DESCRIBE`). Procedure calls additionally require the connection's `execPolicy: "sandbox"`.
+  Restricts MCP SQL queries to read-only statements (`SELECT`, `EXPLAIN`, `WITH`, `SHOW`, `PRAGMA`, `DESCRIBE`). Procedure calls additionally require the connection's `execPolicy: "sandbox"`.  
+  Only **user** settings can turn this off; workspace settings (`.vscode/settings.json`) can set it to `true` to keep a project read-only, but a `false` there is ignored. After you set it to `false`, QueryDock asks you to confirm in a dialog before agents can write, so an agent that edits settings files cannot grant itself write access. Setting it back to `true` revokes the confirmation.
 
 - **`querydock.readOnlyEnvironments`** (`string[]`, default: `["production", "prod", "live"]`)  
-  Environment tags that automatically enforce read-only locking on connections.
+  Environment tags that automatically enforce read-only locking on connections. A connection is also locked when its name, database or username contains one of these tags as a whole word, and whenever it points at a non-local host (see [Security](security.md#4-environment-safety--read-only-protection)). Tags from user and workspace settings are added together and the defaults always apply: settings can add protected tags, never remove one.

@@ -5,18 +5,12 @@
 <p align="center"><b>Give your AI agent safe access to your database.</b><br>
 A read-only-by-default MCP server and a fast database client, inside VS Code, Cursor and Windsurf.</p>
 
-<p align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=querydock.querydock"><img src="https://img.shields.io/visual-studio-marketplace/v/querydock.querydock" alt="Marketplace version"></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=querydock.querydock"><img src="https://img.shields.io/visual-studio-marketplace/i/querydock.querydock" alt="Installs"></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=querydock.querydock&ssr=false#review-details"><img src="https://img.shields.io/visual-studio-marketplace/r/querydock.querydock" alt="Rating"></a>
-</p>
-
 This repository is QueryDock's public home for **bug reports, feature requests and documentation**. The extension's source code is not public.
 
 ## Install
 
 - **VS Code:** [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=querydock.querydock), or search "QueryDock" in the Extensions view.
-- **Cursor, Windsurf, VSCodium:** coming soon to Open VSX. Until then, download the `.vsix` from the Marketplace page and use **Extensions: Install from VSIX…**.
+- **Cursor, Windsurf, VSCodium:** [Open VSX](https://open-vsx.org/extension/querydock/querydock), or search "QueryDock" in the Extensions view.
 
 ## What it does
 
@@ -26,6 +20,28 @@ This repository is QueryDock's public home for **bug reports, feature requests a
 - 🏠 **100% local.** No cloud proxy and no telemetry.
 
 Supports **SQLite, PostgreSQL, MySQL, MariaDB and Microsoft SQL Server**.
+
+## CI check
+
+`querydock-check` fails the build when your QueryDock config could let an AI agent or a teammate write to a remote or production database, or leaks a password. Warn-only is opt-in.
+
+```yaml
+- uses: actions/checkout@v4
+- uses: heysidhant/querydock@v0.2.0
+```
+
+Any other CI: `npx querydock-check [dir] [--warn-only] [--format text|github]` (exit `1` on errors).
+
+| Rule | Level | Catches |
+| :--- | :--- | :--- |
+| `plaintext-password` | error | A password written into the file instead of `${env:VAR}` or `credentialKey` |
+| `remote-missing-environment` | error | A connection to a non-local host (or a `${env:...}` host) with no `environment` tag |
+| `remote-writable` | error | `"isReadOnly": false` on a remote host |
+| `production-writable` | error | `"isReadOnly": false` on a connection tagged or named as production |
+| `invalid-json` | error | A config file QueryDock would silently ignore |
+| `unknown-environment` | warning | A tag like `prd` that gets no protection |
+| `sandbox-without-allowlist` | warning | `execPolicy: "sandbox"` with no `execAllowlist` |
+| `workspace-disables-readonly` | warning | `querydock.mcp.readOnly: false` in `.vscode/settings.json` |
 
 ## Documentation
 
@@ -42,4 +58,4 @@ Supports **SQLite, PostgreSQL, MySQL, MariaDB and Microsoft SQL Server**.
 
 ## License
 
-QueryDock is free to use, including at work, under the [QueryDock End User License Agreement](LICENSE).
+QueryDock is free to use, including at work, under the [QueryDock End User License Agreement](LICENSE). The `querydock-check` CLI is MIT-licensed.

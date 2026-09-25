@@ -1,0 +1,30 @@
+name: QueryDock Check
+description: Fail the build when QueryDock config could let an AI agent or a teammate write to a remote database, or leaks a password.
+author: QueryDock
+branding:
+  icon: lock
+  color: blue
+inputs:
+  path:
+    description: Directory that contains .querydockrc (defaults to the repository root).
+    default: .
+  warn-only:
+    description: Report errors as warnings without failing the build.
+    default: 'false'
+  version:
+    description: querydock-check version range to run from npm.
+    default: '0'
+runs:
+  using: composite
+  steps:
+    - name: Run querydock-check
+      shell: bash
+      # Inputs go through env vars, never straight into the script, so they cannot inject shell.
+      env:
+        QD_PATH: ${{ inputs.path }}
+        QD_WARN_ONLY: ${{ inputs.warn-only }}
+        QD_VERSION: ${{ inputs.version }}
+      run: |
+        args=("$QD_PATH" --format github)
+        if [ "$QD_WARN_ONLY" = "true" ]; then args+=(--warn-only); fi
+        npx --yes "querydock-check@$QD_VERSION" "${args[@]}"
